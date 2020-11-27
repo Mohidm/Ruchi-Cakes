@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Admin = require('../models/admin')
-const ProdCategory = require('../models/prod-category')
+const prodCategory = require('../models/prod-category')
+
 const db = 'mongodb+srv://mohid:mongoose@cluster0.ughwg.mongodb.net/ruchi-cakes?retryWrites=true&w=majority'
 mongoose.connect(db,err=>{
   if(err){
@@ -18,17 +19,29 @@ router.get('/',(req,res) => {
       res.send('From API Route')
 })
 router.post('/new-product-category',(req,res)=>{
-  let prodCat = req.body
-  let category = new ProdCategory(prodCat)
-  category.save((error,newCategory)=>{
-    if(error){
-      console.log(error)
-    }else{
-     
-      res.status(200).send(newCategory)
-    }
-  })
+  const prodCat = new prodCategory({
+    code:req.body.code,
+    category:req.body.category
 })
+    
+     prodCat.save().then(createdCat=>{  
+     res.status(200).json({
+     message: 'Category added successfully',
+     catId:createdCat._id
+})
+
+
+})
+})
+router.get("/product-category", (req, res, next) => {
+  prodCategory.find().then(documents => {
+    res.status(200).json({
+      message: "Category fetched successfully!",
+      productCategory: documents
+    });
+  });
+});
+
 router.post('/login',(req,res)=>{
   let userData = req.body
   Admin.findOne({username:userData.username},(error,user)=>{
