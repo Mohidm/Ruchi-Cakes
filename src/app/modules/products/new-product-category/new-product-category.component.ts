@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from './category.service';
+import { NgForm } from '@angular/forms';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-new-product-category',
@@ -8,15 +9,18 @@ import { CategoryService } from './category.service';
 })
 export class NewProductCategoryComponent implements OnInit {
   prodCategory:any={}
-  constructor(private _cat:CategoryService) { }
+  constructor(public productsService :ProductsService) { }
+  onAddCategory(form:NgForm){
+    if (form.invalid){
+      return
+    }
+    this.productsService.addCategory(form.value.code,form.value.category)
+    form.resetForm()
+  }
 
+ 
   ngOnInit(): void {
   }
-  addCategory(){
-    this._cat.addCategory(this.prodCategory).subscribe(res=> {
-      console.log(res)
-     }, 
-     err=> console.log(err))
-  }
+ 
 
 }

@@ -6,19 +6,63 @@
 </div>
 <hr> --> 
 <mat-tab-group>
-    <mat-tab label="View"> 
+    <mat-tab label="Category"> 
      <br>   
-     <p>Product Listing will be shown Below</p>   
-
+    <!-- <div class="container">
+      <mat-accordion multi="true" *ngIf="prodCategory.length > 0">
+        <mat-expansion-panel *ngFor='let prodCat of prodCategory'>
+            <mat-expansion-panel-header>
+               {{prodCat.code}}
+            </mat-expansion-panel-header>
+            <p>{{prodCat.category}}</p>
+            <mat-action-row>
+                <button mat-button color="accent" >Edit</button>
+                <button mat-button color="warn" >Delete</button>
+              </mat-action-row>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <p class="info-text mat-body-1" *ngIf="prodCategory.length <= 0">No Category Added Yet</p>
+    </div> -->
+    <div class="container">
+        <table #dataTable class="table table-striped table-bordered table-sm row-border hover" style="width:100%" datatable [dtOptions]="dtOptions">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Category Name</th>
+                    <th>Actions</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cat of prodCategory ">
+                    <td>{{cat.code}}</td>
+                    <td>{{cat.category}}</td>
+                    <td><button class="btn btn-primary">Edit</button>&nbsp;
+                        <button class="btn btn-danger">Delete</button>
+                    </td>
+                 
+                   
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    
     </mat-tab>
-    <mat-tab label="Add Product"> 
-        <br>
-        <app-new-product></app-new-product>
+    <mat-tab label="Products"> 
+        <br>   
+        <p>Product Listing will be shown Below</p>   
    
        </mat-tab>
-       <mat-tab label="Add Category"> 
-         <br>
+    <mat-tab label="Add Category"> 
+        <br>
+        
         <app-new-product-category></app-new-product-category>
+   
+       </mat-tab>
+       <mat-tab label="Add Product"> 
+         <br>
+         <app-new-product></app-new-product>
          
        </mat-tab>
 </mat-tab-group>

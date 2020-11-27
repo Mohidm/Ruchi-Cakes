@@ -24,6 +24,7 @@
     "@angular/router": "~11.0.0",
     "admin-lte": "^3.0.5",
     "angular": "^1.8.2",
+    "angular-datatables": "^9.0.2",
     "bootstrap": "^4.5.3",
     "datatables.net": "^1.10.22",
     "datatables.net-dt": "^1.10.22",
