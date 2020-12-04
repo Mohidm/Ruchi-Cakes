@@ -8,6 +8,10 @@ app.use(cors())
 const api = require('./routes/api')
 app.use(bodyParser.json())
 app.use('/api',api)
+const path=require("path")
+
+app.use('/images',express.static(path.join('images')))
+
 app.get('/',function(req,res){
   res.send('Hello From Sever  ')
 })
