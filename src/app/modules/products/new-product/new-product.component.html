@@ -1,76 +1,73 @@
 
-<div class="container">
-  
-    <section class="panel panel-default">
-  <div class="panel-heading"> 
-  <h2 class="panel-title">Add New Product</h2> 
-  </div> 
-  <div class="panel-body">
+    <div class = "tp-container">
+      <mat-card>
+        <form [formGroup]="form" (submit)="onAddProduct()" >
+          <div class="panel-heading"> 
+            <h2 class="panel-title">Product </h2> 
+            </div> 
+            <p>
+              <mat-form-field appearance = "fill">
+                <input matInput type="text" formControlName="name"  placeholder="Product Name"> 
+                <mat-error *ngIf="form.get('name').invalid">Name Required</mat-error>
+            </mat-form-field>
+            </p>
+          <p>
+            <mat-form-field appearance="fill">
+              <mat-label>Category</mat-label>
+              <mat-select [(value)]="selectedValue" formControlName="category">
+                <mat-option *ngFor="let cat of prodCategory" [value]="cat.category" >
+                 {{cat.category}}
+                </mat-option>
+               
+              </mat-select>
+              <mat-error *ngIf="form.get('category').invalid">Category Required</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field>
+              <textarea matInput rows="5" formControlName="description" placeholder="Description"></textarea>
+          </mat-form-field>
     
-  <form action="designer-finish.html" class="form-horizontal" role="form">
-     <div class="form-group">
-      <label for="name" class="col-sm-3 control-label">Product Name</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" name="name" id="name" placeholder="Product Name">
-      </div>
-    </div> <!-- form-group // -->
-    <div class="form-group">
-        <label for="category" class="col-sm-3 control-label">Category</label>
-        <div class="col-sm-3">
-       <select class="form-control">
-        <option value="">Cup Cake</option>
-        <option value="texnolog2">Donut</option>
-        <option value="texnolog3">Pastry</option>
-       </select>
+          </p> 
+          <p>
+            <mat-form-field appearance = "fill">
+              <input matInput type="text" formControlName="recipes"  placeholder="Recipes"> 
+            
+          </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance = "fill">
+              <input matInput type="text" formControlName="price"  placeholder="Price"> 
+            
+          </mat-form-field> 
+          </p>
+          <p>
+            <mat-form-field appearance = "fill">
+              <input matInput type="text" formControlName="stock"  placeholder="Stock"> 
+            
+          </mat-form-field>
+          </p>
+         
+          <div>
+            <button mat-stroked-button type="button" (click)="filePicker.click()" >Pick Image</button>
+            <input type="file" #filePicker (change)="onImagePicked($event)">
+            <div class="image-preview" *ngIf="imagePreview !==' ' && imagePreview && form.get('image').valid">
+                <img [src]="imagePreview" [alt]="form.value.title">
+            </div>
         </div>
-      </div>
-    <div class="form-group">
-      <label for="desc" class="col-sm-3 control-label">Description</label>
-      <div class="col-sm-9">
-        <textarea class="form-control"></textarea>
-      </div>
-    </div> <!-- form-group // -->
-    <div class="form-group">
-      <label for="recipes" class="col-sm-3 control-label">Recipes</label>
-      <div class="col-sm-3">
-     <input type="text" class="form-control" name="recipes" id="recipes" placeholder="Recipes">
-      </div>
-    </div> <!-- form-group // -->
-    <div class="form-group">
-        <label for="price" class="col-sm-3 control-label">Price</label>
-        <div class="col-sm-3">
-       <input type="text" class="form-control" name="price" id="price" placeholder="Price">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="stock" class="col-sm-3 control-label">Stock</label>
-        <div class="col-sm-3">
-       <input type="text" class="form-control" name="stock" id="stock" placeholder="Stock">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="recipes" class="col-sm-3 control-label">Quantity</label>
-        <div class="col-sm-3">
-       <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Quantity">
-        </div>
-      </div>
-    <div class="form-group">
-      <label for="name" class="col-sm-3 control-label">Image</label>
-      <div class="col-sm-3">
-        <label class="control-label small" for="file_img">Supported Types(jpg/png):</label> <input type="file" name="file_img">
-      </div>
-    </div> <!-- form-group // -->
-   <!-- form-group // -->
-    <hr>
-    <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
-          <button type="submit" class="btn btn-info" style="float: left;">Cancel</button>
-        </div>
-      </div>
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-9">
-        <button type="submit" class="btn btn-primary" style="float: right;">Submit</button>
-      </div>
-    </div>
-  </form>
-   
+              <br>
+
+          <p>
+            <mat-form-field appearance = "fill">
+              <input matInput type="text" formControlName="quantity"  placeholder="Quantity"> 
+            
+          </mat-form-field>
+          </p>
+            
+            <button mat-raised-button color="accent" type="submit">Save </button>
+        </form>
+       
+    </mat-card>
+       
+     </div>
+     

@@ -1,65 +1,29 @@
 
-<!-- <div class="container">
-  
-    <section class="panel panel-default">
-  <div class="panel-heading"> 
-  <h2 class="panel-title">Add New Category</h2> 
-  </div> 
-  <div class="panel-body">
-    
-  <form (submit)="onAddCategory(catForm)" #catForm="ngForm">
-     
-    <div class="form-group">
-      <label for="code" class="col-sm-3 control-label">Code</label>
-      <div class="col-sm-3">
-     <input type="text" class="form-control" name="code" placeholder="Category Code" ngModel #code="ngModel" required>
-     <mat-error *ngIf="code.invalid" >Please Enter A Code</mat-error>
-      </div>
-    </div> 
-    <div class="form-group">
-        <label for="name" class="col-sm-3 control-label">Name</label>
-        <div class="col-sm-3">
-       <input type="text" class="form-control" name="category" placeholder="Category Name" ngModel #name="ngModel" required>
-       <mat-error *ngIf="name.invalid" >Please Enter A Name</mat-error>
-        </div>
-      </div>
-    <hr>
-    <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
-          <button type="submit" class="btn btn-info" style="float: left;">Cancel</button>
-        </div>
-      </div>
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-9">
-        <button type="submit"class="btn btn-primary" style="float: right;">Submit</button>
-      </div>
-    </div>
-  </form> -->
  <div class = "tp-container">
   <mat-card>
-    <form (submit)="onAddCategory(catForm)" #catForm="ngForm">
+    <form [formGroup]="form" (submit)="onAddCategory()" >
       <div class="panel-heading"> 
-        <h2 class="panel-title">Add New Product Category</h2> 
+        <h2 class="panel-title">Product Category</h2> 
         </div> 
       <p>
         <mat-form-field appearance = "fill">
-          <input matInput type="text" name="code" ngModel required minlength="3" #title="ngModel" placeholder="Category Code"> 
-          <mat-error *ngIf="title.invalid">Code Required</mat-error>
+          <input matInput type="text" formControlName="code"  placeholder="Category Code"> 
+          <mat-error *ngIf="form.get('code').invalid">Code Required</mat-error>
       </mat-form-field>
       </p>
       <p>
         <mat-form-field appearance = "fill">
-          <input matInput type="text" name="category" ngModel required #content="ngModel" placeholder="Category Name">
-          <mat-error *ngIf="content.invalid">Name Required</mat-error>
+          <input matInput type="text" formControlName="category" placeholder="Category Name">
+          <mat-error *ngIf="form.get('category').invalid">Name Required</mat-error>
       </mat-form-field>
-
-      </p>
+         
+      </p> 
         
         <button mat-raised-button color="accent" type="submit">Save </button>
     </form>
    
 </mat-card>
-    
-
+   
  </div>
+ 
   

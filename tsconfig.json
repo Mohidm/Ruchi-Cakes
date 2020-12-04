@@ -6,14 +6,15 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns":false,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
+    "strictNullChecks":false,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false, 
-    "noImplicitAny": false,
+    "noImplicitAny": false, 
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
@@ -30,3 +31,4 @@
      
   }
 }
+ 

@@ -1,71 +1,107 @@
-<!-- <div class="row">
-    <div class="container">
-     <button class="btn btn-primary" routerLink="./new-category">Add New Category</button>
-     <button class="btn btn-primary" routerLink="./new-product" style="float: right;">Add New Product </button>
-    </div>
-</div>
-<hr> --> 
+
 <mat-tab-group>
     <mat-tab label="Category"> 
      <br>   
-    <!-- <div class="container">
-      <mat-accordion multi="true" *ngIf="prodCategory.length > 0">
-        <mat-expansion-panel *ngFor='let prodCat of prodCategory'>
-            <mat-expansion-panel-header>
-               {{prodCat.code}}
-            </mat-expansion-panel-header>
-            <p>{{prodCat.category}}</p>
-            <mat-action-row>
-                <button mat-button color="accent" >Edit</button>
-                <button mat-button color="warn" >Delete</button>
-              </mat-action-row>
-        </mat-expansion-panel>
-    </mat-accordion>
-    <p class="info-text mat-body-1" *ngIf="prodCategory.length <= 0">No Category Added Yet</p>
-    </div> -->
-    <div class="container">
-        <table #dataTable class="table table-striped table-bordered table-sm row-border hover" style="width:100%" datatable [dtOptions]="dtOptions">
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Category Name</th>
-                    <th>Actions</th>
-                   
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let cat of prodCategory ">
-                    <td>{{cat.code}}</td>
-                    <td>{{cat.category}}</td>
-                    <td><button class="btn btn-primary">Edit</button>&nbsp;
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                 
-                   
-                </tr>
-                
-            </tbody>
-        </table>
-    </div>
-    
+     <div class="search-div">
+         <button mat-raised-button (click)="openCatCreate()"> 
+           <mat-icon>add</mat-icon>Create Category
+         </button>
+         <mat-form-field class="search-form-field" floatLabel="never">
+             <input matInput [(ngModel)]="searchKey" placeholder="search" autocomplete="off" (keyup)="applyFilterCat()">
+             <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey" (click)=onSearchClearCat()>
+              <mat-icon>close</mat-icon>
+             </button>
+         </mat-form-field>
+     </div>
+     <div class="mat-elevation-z8">
+         <mat-table [dataSource]="catList" matSort>
+             <ng-container matColumnDef="Code">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Category Code</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.code}}</mat-cell>
+             </ng-container>
+             <ng-container matColumnDef="Name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Category Name</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.category}}</mat-cell>
+               </ng-container>
+               <ng-container matColumnDef="Action">
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button  [routerLink]="['/admin/edit-category',element.id]" ><mat-icon>launch</mat-icon></button>
+                <button mat-icon-button color="warn" (click)="onDeleteCategory(element.id)"><mat-icon>delete_outline</mat-icon></button>
+                </mat-cell>  
+               </ng-container>
+             <mat-header-row *matHeaderRowDef="displayedColumnCat"></mat-header-row>
+             <mat-row *matRowDef="let row; columns:displayedColumnCat;"></mat-row>
+             
+         </mat-table>
+         <mat-paginator [pageSizeOptions]="[5,10,25]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+     </div>
+
     </mat-tab>
     <mat-tab label="Products"> 
         <br>   
-        <p>Product Listing will be shown Below</p>   
+           <div class="search-div">
+         <button mat-raised-button (click)="openProdCreate()"> 
+           <mat-icon>add</mat-icon>Create Product
+         </button>
+         <mat-form-field class="search-form-field" floatLabel="never">
+             <input matInput [(ngModel)]="searchKey" placeholder="search" autocomplete="off" (keyup)="applyFilterProd()">
+             <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey" (click)=onSearchClearCat()>
+              <mat-icon>close</mat-icon>
+             </button>
+         </mat-form-field>
+     </div>
+     <div class="mat-elevation-z8">
+         <mat-table [dataSource]="prodList" matSort>
+             <ng-container matColumnDef="Name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Product Name</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+             </ng-container>
+             <ng-container matColumnDef="Category">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.category}}</mat-cell>
+               </ng-container>
+               <ng-container matColumnDef="Description">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="DH">Description</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="DC">{{element.description}}</mat-cell>
+               </ng-container>
+               <ng-container matColumnDef="Recipes">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Recipes</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.recipes}}</mat-cell>
+               </ng-container>
+               <ng-container matColumnDef="Price">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.price}}</mat-cell>
+               </ng-container>
+               <ng-container matColumnDef="Stock">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Stock</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.stock}}</mat-cell>
+               </ng-container>
+               <ng-container matColumnDef="Quantity">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.quantity}}</mat-cell>
+               </ng-container>
+               <ng-container matColumnDef="Image">
+                <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+                <mat-cell *matCellDef="let element"> <img src={{element.imagePath}} /> </mat-cell>
+              </ng-container>
+               <ng-container matColumnDef="Action">
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button [routerLink]="['/admin/edit-product',element.id]"  ><mat-icon>launch</mat-icon></button>
+                <button mat-icon-button color="warn" (click)="onDeleteProduct(element.id)" ><mat-icon>delete_outline</mat-icon></button>
+                </mat-cell>  
+               </ng-container>
+             <mat-header-row *matHeaderRowDef="displayedColumnProd"></mat-header-row>
+             <mat-row *matRowDef="let row; columns:displayedColumnProd;"></mat-row>
+             
+         </mat-table>
+         <mat-paginator [pageSizeOptions]="[5,10,25]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+     </div>
    
-       </mat-tab>
-    <mat-tab label="Add Category"> 
-        <br>
-        
-        <app-new-product-category></app-new-product-category>
-   
-       </mat-tab>
-       <mat-tab label="Add Product"> 
-         <br>
-         <app-new-product></app-new-product>
-         
-       </mat-tab>
+       </mat-tab> 
 </mat-tab-group>
+
 
 
    
